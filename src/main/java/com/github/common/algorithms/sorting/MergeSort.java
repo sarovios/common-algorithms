@@ -7,6 +7,7 @@ public class MergeSort {
     private int length;
 
     public void sort(int[] array) {
+        if (array == null) throw new NullPointerException("Array value cannot be null");
         this.array = array;
         this.length = array.length;
         this.tmp = new int[length];
@@ -30,24 +31,14 @@ public class MergeSort {
         int j = middle + 1;
         int k = low;
         while (i <= middle && j <= high) {
-            if (tmp[i] <= tmp[j]) {
-                array[k] = tmp[i];
-                i++;
-            } else {
-                array[k] = tmp[j];
-                j++;
-            }
-            k++;
+            if (tmp[i] <= tmp[j]) array[k++] = tmp[i++];
+            else array[k++] = tmp[j++];
         }
         while (i <= middle) {
-            array[k] = tmp[i];
-            k++;
-            i++;
+            array[k++] = tmp[i++];
         }
         while (j <= high) {
-            array[k] = tmp[j];
-            k++;
-            j++;
+            array[k++] = tmp[j++];
         }
     }
 
