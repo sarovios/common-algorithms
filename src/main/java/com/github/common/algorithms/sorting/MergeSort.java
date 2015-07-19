@@ -1,5 +1,6 @@
 package com.github.common.algorithms.sorting;
 
+//TODO: check with duplicates
 public class MergeSort {
 
     private int[] array;
