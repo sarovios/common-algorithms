@@ -12,14 +12,14 @@ public class QuickSort {
         this.array = array;
         this.length = array.length;
         if (length == 1) return;
-        quickSort(0, length);
+        quickSort(0, length-1);
     }
 
     private void quickSort(int start, int end) {
         if (start < end) {
             int p = findPivot(start, end);
             int newP = partition(p, start, end);
-            quickSort(0, newP-1);
+            quickSort(start, newP-1);
             quickSort(newP+1, end);
         }
     }
@@ -27,7 +27,7 @@ public class QuickSort {
     private int partition(int pivot, int start, int end) {
         int pValue = array[pivot];
         int i = start + 1, j = start + 1;
-        while (j < end) {
+        while (j <= end) {
             if (pValue > array[j]) {
                 swap(i, j);
                 i++;
