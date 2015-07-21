@@ -1,6 +1,5 @@
 package com.github.common.algorithms.sorting;
 
-import com.github.common.algorithms.problem.CountInversions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,9 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
-public class QuickSortTet {
+public class QuickSortTest {
 
     QuickSort quickSort;
 

@@ -7,6 +7,8 @@ public class QuickSort {
     private int[] array;
     private int length;
 
+    private int comparisons;
+
     public void sort(int[] array) {
         if (array == null) throw new NullPointerException("Array value cannot be null");
         this.array = array;
@@ -17,11 +19,16 @@ public class QuickSort {
 
     private void quickSort(int start, int end) {
         if (start < end) {
+            comparisons = comparisons + (end - start);
             int p = findPivot(start, end);
             int newP = partition(p, start, end);
             quickSort(start, newP-1);
             quickSort(newP+1, end);
         }
+    }
+
+    public int getComparisons() {
+        return this.comparisons;
     }
 
     private int partition(int pivot, int start, int end) {
@@ -45,9 +52,26 @@ public class QuickSort {
     }
 
     private int findPivot(int start, int end) {
-        int pIndex = new Random().nextInt(end - start) + start;
-        if (pIndex != start) swap(pIndex, start);
+        int middle = (end - start) / 2 + start;
+        int median = findMedian(start, middle, end);
+        if (median != start) swap(median, start);
+//        int pIndex = new Random().nextInt(end - start) + start;
+//        if (pIndex != start) swap(pIndex, start);
+//        swap(end, start);
         return start;
+    }
+
+    private int findMedian(int s, int m, int e) {
+        int start = array[s];
+        int middle = array[m];
+        int end = array[e];
+        if ( (start >= middle) && (start <= end) ) return s;
+        if ( (start >= end) && (start <= middle) ) return s;
+        if ( (middle >= start) && (middle <= end) ) return m;
+        if ( (middle >= end) && (middle <= start) ) return m;
+        if ( (end >= start) && (end <= middle) ) return e;
+        if ( (end >= middle) && (end <= start) ) return e;
+        return -1;
     }
 
 }
