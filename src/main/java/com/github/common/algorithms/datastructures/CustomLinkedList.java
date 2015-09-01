@@ -1,7 +1,5 @@
 package com.github.common.algorithms.datastructures;
 
-import com.sun.xml.internal.xsom.impl.WildcardImpl;
-
 import java.util.NoSuchElementException;
 
 /**
@@ -24,10 +22,6 @@ public class CustomLinkedList<AnyType> {
 
     }
 
-    public boolean isEmpty() {
-        return head == null;
-    }
-
     public void addFirst(AnyType item) {
         head = new Node<AnyType>(item, head);
     }
@@ -35,12 +29,6 @@ public class CustomLinkedList<AnyType> {
     public AnyType getFirst() {
         if (head == null) throw new NoSuchElementException();
         return head.data;
-    }
-
-    public AnyType removeFirst() {
-        AnyType first = getFirst();
-        head = head.next;
-        return first;
     }
 
     public void addLast(AnyType item) {
@@ -59,9 +47,54 @@ public class CustomLinkedList<AnyType> {
         return tmp.data;
     }
 
+    public boolean isEmpty() {
+        return head == null;
+    }
+
     public void clear() {
         head = null;
     }
+
+    public void insertAfter(AnyType key, AnyType toInsert) {
+        Node<AnyType> tmp = head;
+        while ( (tmp != null) && (tmp.data != key) ) tmp = tmp.next;
+        Node<AnyType> newNode = new Node<AnyType>(toInsert, tmp.next);
+        tmp.next = newNode;
+    }
+
+    public void insertBefore(AnyType key, AnyType toInsert) {
+        if (head.data == key) {
+            addFirst(toInsert);
+            return;
+        }
+
+        Node<AnyType> curr = head;
+        Node<AnyType> previous = null;
+        while ( (curr != null) && (curr.data != key)) {
+            previous = curr;
+            curr = curr.next;
+        }
+        Node<AnyType> newNode = new Node<AnyType>(toInsert, curr);
+        previous.next = newNode;
+    }
+
+
+
+
+
+
+
+
+
+    public AnyType removeFirst() {
+        AnyType first = getFirst();
+        head = head.next;
+        return first;
+    }
+
+
+
+
 
     public boolean contains(AnyType x) {
         Node<AnyType> tmp = head;
@@ -78,12 +111,12 @@ public class CustomLinkedList<AnyType> {
         StringBuffer sb = new StringBuffer();
         Node<AnyType> tmp = head;
         sb.append("[ ");
-        sb.append(tmp.data);
         while (tmp.next != null) {
             sb.append(tmp.data);
             sb.append(" ");
             tmp = tmp.next;
         }
+        sb.append(tmp.data);
         sb.append(" ]");
         return sb.toString();
     }
