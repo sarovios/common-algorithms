@@ -2,6 +2,8 @@ package com.github.common.algorithms.datastructures;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class CustomLinkedListTest {
@@ -90,4 +92,65 @@ public class CustomLinkedListTest {
         linkedList.insertBefore(25, 30);
         assertEquals("[ 5 10 20 15 30 25 ]", linkedList.toString());
     }
+
+    @Test
+    public void deleteTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        linkedList.addLast(25);
+        linkedList.addLast(30);
+        linkedList.addLast(35);
+        assertEquals("[ 5 10 15 25 30 35 ]", linkedList.toString());
+        linkedList.delete(5);
+        assertEquals("[ 10 15 25 30 35 ]", linkedList.toString());
+        linkedList.delete(25);
+        assertEquals("[ 10 15 30 35 ]", linkedList.toString());
+        linkedList.delete(35);
+        assertEquals("[ 10 15 30 ]", linkedList.toString());
+    }
+
+    @Test
+    public void removeFirstTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        assertEquals("[ 5 10 15 ]", linkedList.toString());
+        linkedList.removeFirst();
+        assertEquals("[ 10 15 ]", linkedList.toString());
+    }
+
+    @Test
+    public void containsTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        assertEquals(true, linkedList.contains(5));
+        assertEquals(false, linkedList.contains(50));
+    }
+
+    @Test
+    public void getTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        assertEquals(5, linkedList.get(0).intValue());
+        assertEquals(10, linkedList.get(1).intValue());
+        assertEquals(15, linkedList.get(2).intValue());
+    }
+
+    @Test
+    public void iteratorTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        Iterator<Integer> iter = linkedList.iterator();
+        assertEquals(5, iter.next().intValue());
+        assertEquals(true, iter.hasNext());
+        assertEquals(10, iter.next().intValue());
+        assertEquals(true, iter.hasNext());
+        assertEquals(15, iter.next().intValue());
+        assertEquals(false, iter.hasNext());
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.github.common.algorithms.datastructures;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -8,10 +9,10 @@ import java.util.NoSuchElementException;
  * Time complexity:
  * - Access: O(n)
  * - Search: O(n)
- * - Insertion: O(n)
- * - Deletion: O(n)
+ * - Insertion: O(1)
+ * - Deletion: O(1)
  */
-public class CustomLinkedList<AnyType> {
+public class CustomLinkedList<AnyType> implements Iterable<AnyType> {
 
     private Node<AnyType> head;
 
@@ -78,23 +79,27 @@ public class CustomLinkedList<AnyType> {
         previous.next = newNode;
     }
 
-
-
-
-
-
-
-
+    public void delete(AnyType key) {
+        if (head == null) throw new RuntimeException("Cannot delete from empty linked list");
+        if (key == head.data) {
+            head = head.next;
+            return;
+        }
+        Node<AnyType> curr = head;
+        Node<AnyType> previous = null;
+        while ( (curr != null) && (curr.data != key)) {
+            previous = curr;
+            curr = curr.next;
+        }
+        if (curr == null) throw new RuntimeException("Cannot delete non-exist value");
+        previous.next = curr.next;
+    }
 
     public AnyType removeFirst() {
         AnyType first = getFirst();
         head = head.next;
         return first;
     }
-
-
-
-
 
     public boolean contains(AnyType x) {
         Node<AnyType> tmp = head;
@@ -103,6 +108,13 @@ public class CustomLinkedList<AnyType> {
             tmp = tmp.next;
         }
         return false;
+    }
+
+    public AnyType get(int pos) {
+        Node<AnyType> tmp = head;
+        for (int i = 0; i < pos; i++) tmp = tmp.next;
+        if (tmp == null) throw new IndexOutOfBoundsException();
+        return tmp.data;
     }
 
     @Override
@@ -121,6 +133,9 @@ public class CustomLinkedList<AnyType> {
         return sb.toString();
     }
 
+    /**
+     * The Node inner class
+     */
     private static class Node<AnyType> {
 
         private AnyType data;
@@ -131,4 +146,32 @@ public class CustomLinkedList<AnyType> {
             this.next = next;
         }
     }
+
+    @Override
+    public Iterator<AnyType> iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<AnyType> {
+
+        private Node<AnyType> nextNode;
+
+        public LinkedListIterator() {
+            nextNode = head;
+        }
+        @Override
+        public boolean hasNext() {
+            return nextNode != null;
+        }
+
+        @Override
+        public AnyType next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            AnyType res = nextNode.data;
+            nextNode = nextNode.next;
+            return res;
+        }
+    }
+
+
 }
