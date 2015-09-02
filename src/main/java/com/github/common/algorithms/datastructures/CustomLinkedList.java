@@ -1,7 +1,9 @@
 package com.github.common.algorithms.datastructures;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A LinkedList is an ordered set of data elements, each containing a link to its successor (singly),
@@ -104,7 +106,7 @@ public class CustomLinkedList<AnyType> implements Iterable<AnyType> {
     public boolean contains(AnyType x) {
         Node<AnyType> tmp = head;
         while (tmp.next != null) {
-            if (tmp.data == x) return true;
+            if (tmp.data.equals(x)) return true;
             tmp = tmp.next;
         }
         return false;
@@ -173,5 +175,30 @@ public class CustomLinkedList<AnyType> implements Iterable<AnyType> {
         }
     }
 
+/*************************************************************
+ * Some more coding tasks related with linked lists
+ ************************************************************/
+
+
+    /**
+     * Remove all duplicates of a linked list (for integers)
+     */
+    public void removeDuplicatesWithBuffer() {
+        Set<AnyType> unique = new HashSet<AnyType>();
+        Node<AnyType> curr = head;
+        Node<AnyType> previous = null;
+        while (curr != null) {
+            if (!unique.contains(curr.data)) {
+                unique.add(curr.data);
+                unique.add(curr.data);
+                previous = curr;
+            }
+            else {
+                previous.next = curr.next;
+            }
+
+            curr = curr.next;
+        }
+    }
 
 }

@@ -153,4 +153,27 @@ public class CustomLinkedListTest {
         assertEquals(false, iter.hasNext());
     }
 
+
+/*************************************************************
+ * Some more coding tasks related with linked lists
+ ************************************************************/
+
+    @Test
+    public void removeDuplicatesWithBufferTest() {
+        linkedList.addFirst(5);
+        linkedList.addLast(10);
+        linkedList.addLast(5);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        linkedList.addLast(10);
+        linkedList.addLast(15);
+        assertEquals("[ 5 10 5 10 15 10 15 10 15 ]", linkedList.toString());
+        linkedList.removeDuplicatesWithBuffer();
+        assertEquals("[ 5 10 15 ]", linkedList.toString());
+
+    }
+
+
 }
